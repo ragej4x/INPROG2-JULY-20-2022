@@ -56,9 +56,6 @@ while loop == True:
 
 
 	window.blit(a,(0,0))
-	#TESTEST
-	#TEST
-
 
 
 	onLoop()
