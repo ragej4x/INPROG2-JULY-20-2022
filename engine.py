@@ -181,4 +181,9 @@ class player_mechanics():
 
 
 
+
+
+
+
+
 player = player_mechanics(0,100)

@@ -7,6 +7,7 @@ import map
 import engine
 import grass
 import random
+import fx
 pg.init()
 
 width ,height = 1024,600
@@ -38,7 +39,6 @@ animation = False
 movement = False
 
 
-
 #LOOP
 loop = True
 while loop == True:
@@ -52,7 +52,7 @@ while loop == True:
 	engine.player.animation(window,keyinput)
 	engine.player.combat(window,keyinput)
 	#map.map_1.tiles(window)
-
+	fx.vfx.smoke.smoke_fx(window,100,200)
 
 
 	window.blit(a,(0,0))
