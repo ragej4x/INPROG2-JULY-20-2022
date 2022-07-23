@@ -1,3 +1,4 @@
+from re import S
 import pygame as pg
 import run, idle , jump , atk,map
 import random
@@ -21,6 +22,11 @@ class player_mechanics():
         self.skill_1 = False
         self.skill_2 = False
         self.skill_3 = False
+
+
+
+        self.cd = 10
+        self.cd_bool = False
 
 
 
@@ -97,12 +103,21 @@ class player_mechanics():
 
     def combat(self, window , keyinput):
 
+        self.cd += 0.1
+        if self.cd > 10:
+            self.cd = 10
+            self.cd_bool = True
 
+
+        print(self.cd)
 
         # SKILL 1
 
-        if keyinput[pg.K_q]:
+        if keyinput[pg.K_q] and self.cd_bool == True:
             self.skill_1 = True
+            self.cd = 0
+            self.cd_bool = False
+        
 
         if self.skill_1 == True  and self.left == True:
             atk.atk_K1_animation.animate_left(window,self.rect.x - 15, self.rect.y -7)
