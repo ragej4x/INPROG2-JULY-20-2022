@@ -52,10 +52,9 @@ while loop == True:
 	engine.player.animation(window,keyinput)
 	engine.player.combat(window,keyinput)
 	#map.map_1.tiles(window)
-	fx.vfx.smoke.smoke_fx(window,100,200)
+	fx.vfx.smokeFx(window,10,10)
 
 
-	window.blit(a,(0,0))
-
+	#window.blit(a,(0,0))
 
 	onLoop()
