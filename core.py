@@ -10,8 +10,9 @@ display = pg.display.set_mode(display_res, pg.DOUBLEBUF )
 clock = pg.time.Clock()
 pg.display.set_caption("AlphaV0.0.0.0 invdev")
 
-
 window = pg.Surface((300 ,200))
+
+bg = pg.image.load("background1.png")
 
 def onLoop():
 	global loop
@@ -113,6 +114,7 @@ def optimize():
 loop = True
 while loop == True:
 	window.fill((200,200,200))
+	#window.blit(bg,(0,-150))
 	#display.fill((200,200,200))
 	keyinput = pg.key.get_pressed()
 

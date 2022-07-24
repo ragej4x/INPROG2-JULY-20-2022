@@ -18,7 +18,6 @@ class player_mechanics():
         self.jump = False
 
 
-
         self.left = False
         self.right = True
 
@@ -77,7 +76,7 @@ class player_mechanics():
         if self.rect.y <= 150:
             self.jump = False
         
-        
+
         #print(self.y_vel)
 
 
@@ -99,7 +98,6 @@ class player_mechanics():
 
     def animation(self,window , keyinput):
         
-
 
         if self.left == True and keyinput[pg.K_LEFT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
             run.run_animation.animate_left(window, self.x - 10, self.rect.y -7)
