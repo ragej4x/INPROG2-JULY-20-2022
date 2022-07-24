@@ -1,7 +1,6 @@
 import imp
 import pygame as pg
 import run , atk , idle
-
 import random
 
 
@@ -73,7 +72,6 @@ class player_mechanics():
             self.jump = False
 
 
-
         #GRAVITY & VEL
 
         self.y_vel += 0.5
@@ -91,7 +89,6 @@ class player_mechanics():
             dy = 0
 
 
-    
 
     def animation(self,window , keyinput):
         pg.draw.rect(window,(255,0,0),(self.rect),1)

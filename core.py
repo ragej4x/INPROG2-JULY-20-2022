@@ -1,6 +1,7 @@
 import pygame as pg
 import engine
 import random
+from data.mp_data import mp_data
 
 pg.init()
 
@@ -50,6 +51,7 @@ while loop == True:
 	pg.draw.rect(window,(255,255,0),(20,100,30,30))
 	#map.map_1.tiles(window)
 	#fx.vfx.animate_left(window,10,10)
+	mp_data.map_lvl.Loop(window)
 
 
 	#window.blit(a,(0,0))

@@ -1,24 +1,24 @@
 import pygame as pg
+from data.mpdata2 import *
 
-class home_map():
-	def __init__(self):
-		self.size = 20
-		self.tile = ("level1_data.txt")
+class map_1():
+    def __init__(self):
+        self.size = 20
+        self.tile = tile()
+
+
+    def Loop(self,window):
+        y = 0
+        for i in self.tile:
+            x = 0
+            for row in i:
+                if row == -1:
+                    pg.draw.rect(window ,(255,0,0) , (x * 15,y * 15, 15,15 ))
+
+                x += 1
+        y = 0
 
 
 
 
-	def tiles(self,window):
-		y = 0
-		with open(self.tile, "r") as map_1:
-			x = 0
-			for row in map_1:
-
-				if row == 1:
-					print("A")
-					pg.draw.rect(window,(255,0,255),(x * self.size ,y * self.size ,self.size,self.size))
-				if row == 0:
-					pg.Rect(x * self.size ,y * self.size ,self.size,self.size)
-				x += 1
-			y += 1
-map_1 = home_map()
+map_lvl = map_1()
