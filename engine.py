@@ -4,22 +4,23 @@ import random
 
 
 class player_mechanics():
-    def __init__(self, x , y):
+    def __init__(self):
         self.x = 0
         self.y = 0
+
+        self.rect = pg.Rect(self.x , self.y,15,30)
 
         self.camera_x = 0
         self.camera_y = 0
 
+
         self.y_vel = 0
         self.jump = False
 
-        self.rect = pg.Rect(self.x , self.y,15,30)
-        self.rect.x = x
-        self.rect.y = y
+
 
         self.left = False
-        self.right = False
+        self.right = True
 
         self.skill_1 = False
         self.skill_2 = False
@@ -27,11 +28,24 @@ class player_mechanics():
 
         self.cd = 10
         self.cd_bool = False
+        self.addin_bool = False
+        self.addin = 0
+
+    def camera(self, window ,keyinput):
+        if keyinput[pg.K_LEFT]:
+            self.camera_x -= 2
+
+        if keyinput[pg.K_RIGHT]:
+            self.camera_x += 2
 
 
 
     def movement(self,window , keyinput):
+        
         player = pg.draw.rect(window,(255,0,0),(self.rect),1)
+
+        self.rect.x = self.x
+
         dx = 0
         dy = 0
         
@@ -41,28 +55,31 @@ class player_mechanics():
             self.left = True
             self.right = False
             
-
-            dx = -2
+            self.x -= 2
 
         if keyinput[pg.K_RIGHT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
             self.left = False
             self.right = True
             
+            self.x += 2
+            if keyinput[pg.K_RIGHT] and keyinput[pg.K_LEFT]:
+                self.x += 2
 
-            dx = +2
 
         # JUMP
 
         if keyinput[pg.K_UP]:
             self.jump = True
 
-
-
         if self.jump == True and self.y_vel == 10:
-            self.y_vel = -8
+            self.y_vel = - 8
 
-        if self.rect.y <= 200:
+        if self.rect.y <= 150:
             self.jump = False
+        
+        
+        #print(self.y_vel)
+
 
         #GRAVITY & VEL
 
@@ -71,13 +88,11 @@ class player_mechanics():
             self.y_vel = 10
 
         dy += self.y_vel
-
-
-        self.rect.x += dx
         self.rect.y += dy
         
-        if self.rect.bottom > 190:
-            self.rect.bottom = 190
+
+        if self.rect.bottom > 170:
+            self.rect.bottom = 170
             dy = 0
     
 
@@ -85,19 +100,35 @@ class player_mechanics():
     def animation(self,window , keyinput):
         
 
+
         if self.left == True and keyinput[pg.K_LEFT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
-            run.run_animation.animate_left(window, self.rect.x - 15, self.rect.y -7)
+            run.run_animation.animate_left(window, self.x - 10, self.rect.y -7)
 
         if self.right == True and keyinput[pg.K_RIGHT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
-            run.run_animation.animate_right(window, self.rect.x - 20, self.rect.y - 7)
+            run.run_animation.animate_right(window, self.x - 25, self.rect.y - 7)
 
         
-        if self.left == True and keyinput[pg.K_LEFT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
-            idle.idle_animation.animate_left(window, self.rect.x - 15, self.rect.y - 7)
+
+        # IF ON IDLE MODE
+
+        if self.addin_bool == False:
+            if self.left == True and keyinput[pg.K_LEFT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
+                idle.idle_animation.animate_left(window, self.x - 18, self.rect.y - 7)
 
 
-        if self.right == True and keyinput[pg.K_RIGHT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
-            idle.idle_animation.animate_right(window, self.rect.x - 15, self.rect.y - 7)
+            if self.right == True and keyinput[pg.K_RIGHT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
+                idle.idle_animation.animate_right(window, self.x - 18, self.rect.y - 7)
+
+        # IF ON IDLE AND THE ATK MODE IS ON
+
+        if self.addin_bool == True:
+            if self.left == True and keyinput[pg.K_LEFT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
+                idle.idle_animation_2.animate_left(window, self.x - 18, self.rect.y - 7)
+
+
+            if self.right == True and keyinput[pg.K_RIGHT] == False and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
+                idle.idle_animation_2.animate_right(window, self.x - 18, self.rect.y - 7)
+
 
 
     def combat(self, window , keyinput):
@@ -107,19 +138,27 @@ class player_mechanics():
             self.cd = 10
             self.cd_bool = True
 
+        self.addin += 0.1
+        if self.addin > 30:
+            self.addin = 30
+            self.addin_bool = False
+
+
         # SKILL 1
 
         if keyinput[pg.K_q] and self.cd_bool == True:
             self.skill_1 = True
             self.cd = 0
             self.cd_bool = False
+            self.addin_bool = True
+            self.addin = 0
         
 
         if self.skill_1 == True  and self.left == True:
-            atk.atk_K1_animation.animate_left(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K1_animation.animate_left(window,self.x - 15, self.rect.y -7)
 
         if self.skill_1 == True  and self.right == True :
-            atk.atk_K1_animation.animate_right(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K1_animation.animate_right(window,self.x - 15, self.rect.y -7)
 
 
         if atk.atk_K1_animation.count == 0:
@@ -133,11 +172,11 @@ class player_mechanics():
 
 
         if self.skill_2 == True and self.right == True:
-            atk.atk_K2_animation.animate_right(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K2_animation.animate_right(window,self.x  - 15, self.rect.y -7)
 
 
         if self.skill_2 == True and self.left == True:
-            atk.atk_K2_animation.animate_left(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K2_animation.animate_left(window,self.x - 15, self.rect.y -7)
 
 
         if atk.atk_K2_animation.count == 0:
@@ -151,11 +190,11 @@ class player_mechanics():
 
 
         if self.skill_3 == True and self.left == True:
-            atk.atk_K3_animation.animate_left(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K3_animation.animate_left(window,self.x - 15, self.rect.y -7)
 
 
         if self.skill_3 == True and self.right == True:
-            atk.atk_K3_animation.animate_right(window,self.rect.x - 15, self.rect.y -7)
+            atk.atk_K3_animation.animate_right(window,self.x - 15, self.rect.y -7)
 
 
         if atk.atk_K3_animation.count == 0:
@@ -165,13 +204,13 @@ class player_mechanics():
         #SWING PHYSICS
 
         if atk.atk_K3_animation.count == 1.05 and self.right == True:
-            self.rect.x += 5
+            self.x += 10
         if atk.atk_K3_animation.count == 1.2 and self.right == True:
-            self.rect.x += 5
+            self.x += 10
             #LEFT
         if atk.atk_K3_animation.count == 1.05 and self.left == True:
-            self.rect.x -= 5
+            self.x -= 10
         if atk.atk_K3_animation.count == 1.2 and self.left == True:
-            self.rect.x -= 5
+            self.x -= 10
 
-player = player_mechanics(100,0)
+player = player_mechanics()
