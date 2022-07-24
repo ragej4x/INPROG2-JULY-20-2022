@@ -1,13 +1,7 @@
 import pygame as pg
-import idle
-import run
-import atk
-import jump
-import map
 import engine
-import grass
 import random
-import fx
+
 pg.init()
 
 width ,height = 1024,600
@@ -16,7 +10,7 @@ clock = pg.time.Clock()
 pg.display.set_caption("AlphaV0.0.0.0 invdev")
 font = pg.font.Font("data/pix.ttf", 18)
 
-window = pg.Surface((400,300))
+window = pg.Surface((300 ,200))
 
 def onLoop():
 	global loop
@@ -25,7 +19,7 @@ def onLoop():
 			loop = False
 
 
-	dynamic_res = pg.transform.scale(window,(width,height))
+	dynamic_res = pg.transform.scale(window,(width , height))
 	display.blit(dynamic_res,(0,0))
 	pg.display.flip()
 	clock.tick(60)
@@ -43,16 +37,19 @@ movement = False
 loop = True
 while loop == True:
 	window.fill((200,200,200))
+	display.fill((200,200,200))
 	keyinput = pg.key.get_pressed()
 
 
-
 	#engine.player.player(window,keyinput)
+	
 	engine.player.movement(window,keyinput)
 	engine.player.animation(window,keyinput)
 	engine.player.combat(window,keyinput)
+	engine.player.camera(window,keyinput)
+	pg.draw.rect(window,(255,255,0),(20,100,30,30))
 	#map.map_1.tiles(window)
-	fx.vfx.smokeFx(window,10,10)
+	#fx.vfx.animate_left(window,10,10)
 
 
 	#window.blit(a,(0,0))

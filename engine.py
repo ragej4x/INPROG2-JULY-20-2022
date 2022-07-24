@@ -1,6 +1,7 @@
-from re import S
+import imp
 import pygame as pg
-import run, idle , jump , atk,map
+import run , atk , idle
+
 import random
 
 
@@ -9,6 +10,9 @@ class player_mechanics():
         self.player_rect = pg.image.load("data/plhb.ob")
         self.x = 0
         self.y = 250
+
+        self.camera_x = 0
+        self.camera_y = 0
 
         self.y_vel = 0
         self.jump = False
@@ -23,10 +27,15 @@ class player_mechanics():
         self.skill_2 = False
         self.skill_3 = False
 
-
-
         self.cd = 10
         self.cd_bool = False
+
+    def camera(self, window ,keyinput):
+        if keyinput[pg.K_LEFT]:
+            self.camera_x -= 2
+
+        if keyinput[pg.K_RIGHT]:
+            self.camera_x += 2
 
 
 
@@ -39,12 +48,14 @@ class player_mechanics():
         if keyinput[pg.K_LEFT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
             self.left = True
             self.right = False
+            
 
             dx = -2
 
         if keyinput[pg.K_RIGHT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
             self.left = False
             self.right = True
+            
 
             dx = +2
 
@@ -75,12 +86,12 @@ class player_mechanics():
         self.rect.x += dx
         self.rect.y += dy
 
-        if self.rect.bottom > 250:
-            self.rect.bottom = 250
+        if self.rect.bottom > 200:
+            self.rect.bottom = 200
             dy = 0
 
 
-
+    
 
     def animation(self,window , keyinput):
         pg.draw.rect(window,(255,0,0),(self.rect),1)
@@ -178,10 +189,6 @@ class player_mechanics():
             self.rect.x -= 5
         if atk.atk_K3_animation.count == 1.2 and self.left == True:
             self.rect.x -= 5
-
-
-
-
 
 
 
