@@ -1,4 +1,3 @@
-import imp
 import pygame as pg
 import run , atk , idle
 import random
@@ -6,9 +5,8 @@ import random
 
 class player_mechanics():
     def __init__(self, x , y):
-        self.player_rect = pg.image.load("data/plhb.ob")
         self.x = 0
-        self.y = 250
+        self.y = 0
 
         self.camera_x = 0
         self.camera_y = 0
@@ -17,7 +15,8 @@ class player_mechanics():
         self.jump = False
 
         self.rect = pg.Rect(self.x , self.y,15,30)
-
+        self.rect.x = x
+        self.rect.y = y
 
         self.left = False
         self.right = False
@@ -29,16 +28,10 @@ class player_mechanics():
         self.cd = 10
         self.cd_bool = False
 
-    def camera(self, window ,keyinput):
-        if keyinput[pg.K_LEFT]:
-            self.camera_x -= 2
-
-        if keyinput[pg.K_RIGHT]:
-            self.camera_x += 2
-
 
 
     def movement(self,window , keyinput):
+        player = pg.draw.rect(window,(255,0,0),(self.rect),1)
         dx = 0
         dy = 0
         
@@ -65,12 +58,11 @@ class player_mechanics():
 
 
 
-        if self.jump == True:
-            self.y_vel = -10
+        if self.jump == True and self.y_vel == 10:
+            self.y_vel = -8
 
         if self.rect.y <= 200:
             self.jump = False
-
 
         #GRAVITY & VEL
 
@@ -83,16 +75,15 @@ class player_mechanics():
 
         self.rect.x += dx
         self.rect.y += dy
-
-        if self.rect.bottom > 200:
-            self.rect.bottom = 200
+        
+        if self.rect.bottom > 190:
+            self.rect.bottom = 190
             dy = 0
-
+    
 
 
     def animation(self,window , keyinput):
-        pg.draw.rect(window,(255,0,0),(self.rect),1)
-
+        
 
         if self.left == True and keyinput[pg.K_LEFT] and self.skill_1 == False and self.skill_2 == False and self.skill_3 == False:
             run.run_animation.animate_left(window, self.rect.x - 15, self.rect.y -7)
@@ -115,9 +106,6 @@ class player_mechanics():
         if self.cd > 10:
             self.cd = 10
             self.cd_bool = True
-
-
-        print(self.cd)
 
         # SKILL 1
 
@@ -174,7 +162,6 @@ class player_mechanics():
             self.skill_3 = False
 
 
-
         #SWING PHYSICS
 
         if atk.atk_K3_animation.count == 1.05 and self.right == True:
@@ -187,7 +174,4 @@ class player_mechanics():
         if atk.atk_K3_animation.count == 1.2 and self.left == True:
             self.rect.x -= 5
 
-
-
-
-player = player_mechanics(0,100)
+player = player_mechanics(100,0)

@@ -13,3 +13,30 @@
 	atk.atk_K3_animation.x = 200
 	jump.fall_animation.x = 250
 	jump.jump_animation.y = 50
+
+
+
+
+	run.run_animation.animation_list_left[0].convert()
+	run.run_animation.animation_list_left[1].convert()
+	run.run_animation.animation_list_left[2].convert()
+	run.run_animation.animation_list_left[3].convert()
+	run.run_animation.animation_list_left[4].convert()
+	run.run_animation.animation_list_left[5].convert()
+
+	run.run_animation.animation_list_right[0].convert()
+	run.run_animation.animation_list_right[1].convert()
+	run.run_animation.animation_list_right[2].convert()
+	run.run_animation.animation_list_right[3].convert()
+	run.run_animation.animation_list_right[4].convert()
+	run.run_animation.animation_list_right[5].convert()
+
+	idle.idle_animation.animation_list_left[0].convert()
+	idle.idle_animation.animation_list_left[1].convert()
+	idle.idle_animation.animation_list_left[2].convert()
+	idle.idle_animation.animation_list_left[3].convert()
+
+	idle.idle_animation.animation_list_right[0].convert()
+	idle.idle_animation.animation_list_right[1].convert()
+	idle.idle_animation.animation_list_right[2].convert()
+	idle.idle_animation.animation_list_right[3].convert()
